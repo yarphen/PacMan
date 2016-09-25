@@ -73,8 +73,46 @@ public class Labyrinth {
         return exists(x,y) && cells[y][x] != 1;
     }
 
+    /** Check if Ghost or Pacman can go through this cell */
+    public boolean isOpened(Point p){
+        int x = p.getX();
+        int y = p.getY();
+        return exists(x,y) && cells[y][x] != 1;
+    }
+
     /** Check if cell exists */
     private boolean exists(int x, int y){
         return !(x < 0 || y < 0 || y > cells.length-1 || x > cells[y].length-1 );
+    }
+
+    /** Check if cell exists */
+    private boolean exists(Point p){
+        int x = p.getX();
+        int y = p.getY();
+        return !(x < 0 || y < 0 || y > cells.length-1 || x > cells[y].length-1 );
+    }
+
+    public Point topPoint(Point current){
+        if(isOpened(current.getX(),current.getY()-1))
+            return new Point(current.getX(),current.getY()-1);
+        return null;
+    }
+
+    public Point botPoint(Point current){
+        if(isOpened(current.getX(),current.getY() + 1))
+            return new Point(current.getX(),current.getY() + 1);
+        return null;
+    }
+
+    public Point rightPoint(Point current){
+        if(isOpened(current.getX() + 1 ,current.getY()))
+            return new Point(current.getX() + 1,current.getY());
+        return null;
+    }
+
+    public Point leftPoint(Point current){
+        if(isOpened(current.getX() - 1 ,current.getY()))
+            return new Point(current.getX() - 1,current.getY());
+        return null;
     }
 }

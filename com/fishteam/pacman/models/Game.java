@@ -1,42 +1,103 @@
 package com.fishteam.pacman.models;
 
-public class Game {
+import com.fishteam.pacman.interfaces.Problem;
+import com.fishteam.pacman.interfaces.State;
+
+import java.util.List;
+
+public class Game implements Problem{
     Labyrinth labyrinth;
     Ghost ghost;
 
-    Game(){
+    public Game(){
         labyrinth = new Labyrinth();
         ghost = new Ghost();
     }
 
 
-    public void moveGhostTop(){
-        int current_x = ghost.getX();
-        int current_y = ghost.getY();
-        if(labyrinth.isOpened(current_x,--current_y))
-            ghost.setY(--current_y);
-    }
-
-    public void moveGhostBot(){
-        int current_x = ghost.getX();
-        int current_y = ghost.getY();
-        if(labyrinth.isOpened(current_x,++current_y)){
-            ghost.setY(++current_y);
+    public void moveGhostTop() throws BlockException {
+        Point newPoint = labyrinth.topPoint(ghostLocation());
+        if(newPoint != null){
+            ghost.setLocation(newPoint);
         }
-
+        else
+            throw new BlockException("you can't move there");
     }
 
-    public void moveGhostRight(){
-        int current_x = ghost.getX();
-        int current_y = ghost.getY();
-        if(labyrinth.isOpened(current_x,++current_x))
-            ghost.setX(++current_x);
+    public void moveGhostBot() throws BlockException {
+        Point newPoint = labyrinth.botPoint(ghostLocation());
+        if(newPoint != null){
+            ghost.setLocation(newPoint);
+        }
+        else
+            throw new BlockException("you can't move there");
     }
 
-    public void moveGhostLeft(){
-        int current_x = ghost.getX();
-        int current_y = ghost.getY();
-        if(labyrinth.isOpened(current_x,--current_x))
-            ghost.setX(--current_x);
+    public void moveGhostRight() throws BlockException {
+        Point newPoint = labyrinth.rightPoint(ghostLocation());
+        if(newPoint != null){
+            ghost.setLocation(newPoint);
+        }
+        else
+            throw new BlockException("you can't move there");
+    }
+
+    public void moveGhostLeft() throws BlockException {
+        Point newPoint = labyrinth.leftPoint(ghostLocation());
+        if(newPoint != null){
+            ghost.setLocation(newPoint);
+        }
+        else
+            throw new BlockException("you can't move there");
+    }
+
+    @Override
+    public State getState() {
+        return null;
+    }
+
+    @Override
+    public State getStartState() {
+        return null;
+    }
+
+    @Override
+    public State getGoalState() {
+        return null;
+    }
+
+    @Override
+    public List<State> getChildren(State father) {
+        return null;
+    }
+
+    @Override
+    public double getPathWeight(List<State> path) {
+        return 0;
+    }
+
+    public Labyrinth getLabyrinth() {
+        return labyrinth;
+    }
+
+    public void setLabyrinth(Labyrinth labyrinth) {
+        this.labyrinth = labyrinth;
+    }
+
+    public Ghost getGhost() {
+        return ghost;
+    }
+
+    public void setGhost(Ghost ghost) {
+        this.ghost = ghost;
+    }
+
+    public Point ghostLocation(){
+        return new Point(ghost.getX(),getGhost().getY());
+    }
+
+    public class BlockException extends Exception {
+        public BlockException(String s) {
+        }
     }
 }

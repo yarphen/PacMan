@@ -27,6 +27,15 @@ public class Ghost {
         this.y = y;
     }
 
+    public Point getLocation(){
+        return new Point(x,y);
+    }
+
+    public void setLocation(Point p){
+        x = p.getX();
+        y = p.getY();
+    }
+
     public String toString(){
         return "ghost(" + x +"," + y +")";
     }
