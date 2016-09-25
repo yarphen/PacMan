@@ -6,8 +6,8 @@ import com.fishteam.pacman.interfaces.State;
 import java.util.List;
 
 public class Game implements Problem{
-    Labyrinth labyrinth;
-    Ghost ghost;
+    private Labyrinth labyrinth;
+    private Ghost ghost;
 
     public Game(){
         labyrinth = new Labyrinth();
@@ -51,27 +51,22 @@ public class Game implements Problem{
             throw new BlockException("you can't move there");
     }
 
-    @Override
     public State getState() {
         return null;
     }
 
-    @Override
     public State getStartState() {
         return null;
     }
 
-    @Override
     public State getGoalState() {
         return null;
     }
 
-    @Override
     public List<State> getChildren(State father) {
         return null;
     }
 
-    @Override
     public double getPathWeight(List<State> path) {
         return 0;
     }
