@@ -8,9 +8,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import com.fishteam.pacman.interfaces.Problem;
+import com.fishteam.pacman.interfaces.ProblemSolver;
 import com.fishteam.pacman.interfaces.ProblemState;
 
-public class BFSProblemSolver {
+public class BFSProblemSolver implements ProblemSolver{
 	public List<ProblemState> solve(final Problem problem){
 		Set<ProblemState> visited = new HashSet<ProblemState>();
 		Node root = new Node(null);

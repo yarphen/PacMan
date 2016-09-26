@@ -2,97 +2,83 @@ package com.fishteam.pacman.models;
 
 import com.fishteam.pacman.interfaces.Problem;
 import com.fishteam.pacman.interfaces.ProblemState;
+import com.fishteam.pacman.json.GameInfo;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Game implements Problem{
-    private Labyrinth labyrinth;
-    private Ghost ghost;
-    private PacMan pacman;
-    private Cherry cherry;
-    public Game(){
-        labyrinth = new Labyrinth();
-        ghost = new Ghost();
-        pacman = new PacMan();
-        cherry = new Cherry();
-    }
+	private Labyrinth labyrinth = new Labyrinth();
+	private Ghost ghost = new Ghost();
+	private PacMan pacman = new PacMan();
+	private Cherry cherry = new Cherry();
+	private GameInfo info = new GameInfo();
+	private List<Point> way = new LinkedList<Point>();
+	private PacManThread thread;
+	public Game(){}
+	public void moveGhostTop() throws BlockException {
+		Point newPoint = labyrinth.topPoint(ghostLocation());
+		if(newPoint != null){
+			ghost.setLocation(newPoint);
+		}
+		else
+			throw new BlockException("you can't move there");
+	}
 
+	public void moveGhostBot() throws BlockException {
+		Point newPoint = labyrinth.botPoint(ghostLocation());
+		if(newPoint != null){
+			ghost.setLocation(newPoint);
+		}
+		else
+			throw new BlockException("you can't move there");
+	}
 
-    public void moveGhostTop() throws BlockException {
-        Point newPoint = labyrinth.topPoint(ghostLocation());
-        if(newPoint != null){
-            ghost.setLocation(newPoint);
-        }
-        else
-            throw new BlockException("you can't move there");
-    }
+	public void moveGhostRight() throws BlockException {
+		Point newPoint = labyrinth.rightPoint(ghostLocation());
+		if(newPoint != null){
+			ghost.setLocation(newPoint);
+		}
+		else
+			throw new BlockException("you can't move there");
+	}
 
-    public void moveGhostBot() throws BlockException {
-        Point newPoint = labyrinth.botPoint(ghostLocation());
-        if(newPoint != null){
-            ghost.setLocation(newPoint);
-        }
-        else
-            throw new BlockException("you can't move there");
-    }
+	public void moveGhostLeft() throws BlockException {
+		Point newPoint = labyrinth.leftPoint(ghostLocation());
+		if(newPoint != null){
+			ghost.setLocation(newPoint);
+		}
+		else
+			throw new BlockException("you can't move there");
+	}
 
-    public void moveGhostRight() throws BlockException {
-        Point newPoint = labyrinth.rightPoint(ghostLocation());
-        if(newPoint != null){
-            ghost.setLocation(newPoint);
-        }
-        else
-            throw new BlockException("you can't move there");
-    }
+	public ProblemState getStartState() {
+		return pacman;
+	}
 
-    public void moveGhostLeft() throws BlockException {
-        Point newPoint = labyrinth.leftPoint(ghostLocation());
-        if(newPoint != null){
-            ghost.setLocation(newPoint);
-        }
-        else
-            throw new BlockException("you can't move there");
-    }
+	public ProblemState getGoalState() {
+		return cherry;
+	}
 
-    public ProblemState getState() {
-        return pacman;
-    }
+	public List<ProblemState> getChildren(ProblemState father) {
+		List<ProblemState> children = new LinkedList<ProblemState>();
+		Point point = (Point)father;
+		ProblemState top = getLabyrinth().topPoint(point);
+		ProblemState bot = getLabyrinth().botPoint(point);
+		ProblemState right = getLabyrinth().rightPoint(point);
+		ProblemState left = getLabyrinth().leftPoint(point);
+		if (top!=null)children.add(top);
+		if (bot!=null)children.add(bot);
+		if (right!=null)children.add(right);
+		if (left!=null)children.add(left);
+		return children;
+	}
 
-    public ProblemState getStartState() {
-        return null;
-    }
-
-    public ProblemState getGoalState() {
-        return null;
-    }
-
-    public List<ProblemState> getChildren(ProblemState father) {
-        return null;
-    }
-
-    public double getPathWeight(List<ProblemState> path) {
-        return 0;
-    }
-
-    public Labyrinth getLabyrinth() {
-        return labyrinth;
-    }
-
-    public void setLabyrinth(Labyrinth labyrinth) {
-        this.labyrinth = labyrinth;
-    }
-
-    public Ghost getGhost() {
-        return ghost;
-    }
-
-    public void setGhost(Ghost ghost) {
-        this.ghost = ghost;
-    }
-
-    public Point ghostLocation(){
-        return new Point(ghost.getX(),getGhost().getY());
-    }
+	public Point ghostLocation(){
+		return new Point(ghost.getX(),ghost.getY());
+	}
 
 
 	public List<ProblemState> getFathers(ProblemState child) {
@@ -101,8 +87,116 @@ public class Game implements Problem{
 		 */
 		return getChildren(child);
 	}
+
+
+	public Labyrinth getLabyrinth() {
+		return labyrinth;
+	}
+
+
+	public void setLabyrinth(Labyrinth labyrinth) {
+		this.labyrinth = labyrinth;
+	}
+
+
+	public Ghost getGhost() {
+		return ghost;
+	}
+
+
+	public void setGhost(Ghost ghost) {
+		this.ghost = ghost;
+	}
+
+
+	public PacMan getPacman() {
+		return pacman;
+	}
+
+
+	public void setPacman(PacMan pacman) {
+		this.pacman = pacman;
+	}
+
+
+	public Cherry getCherry() {
+		return cherry;
+	}
+
+
+	public void setCherry(Cherry cherry) {
+		this.cherry = cherry;
+	}
+	public GameInfo getInfo() {
+		return info;
+	}
+	public void setInfo(GameInfo info) {
+		this.info = info;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 89;
+		int result = 1;
+		result = prime * result + ((info == null) ? 0 : info.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Game other = (Game) obj;
+		if (info == null) {
+			if (other.info != null)
+				return false;
+		} else if (!info.equals(other.info))
+			return false;
+		return true;
+	}
+	public void init(List<ProblemState> way){
+		way.forEach(new Consumer<ProblemState>() {
+			@Override
+			public void accept(ProblemState p) {
+				Game.this.way.add((Point)p);
+			}
+		});
+		thread = new PacManThread(this.way, this);
+	}
+	public void start(){
+		thread.start();
+	}
+	public void stop(){
+		thread.interrupt();
+	}
+}
+class PacManThread extends Thread{
+	private static final long DELAY = 500;
+	private List<Point> way;
+	private Game game;
+	public PacManThread(List<Point> way, Game game) {
+		super();
+		this.way = way;
+		this.game = game;
+	}
+
+	@Override
+	public void run() {
+		Iterator<Point> iterator = way.iterator();
+		try {
+			while(!isInterrupted()&&iterator.hasNext()){
+				game.getPacman().setLocation(iterator.next());
+				Thread.sleep(DELAY);
+			}
+		} catch (InterruptedException e) {
+			System.err.println("Game has been interrupted!");
+		}
+	}
 }
 class BlockException extends Exception {
-    public BlockException(String s) {
-    }
+	public BlockException(String s) {
+		super(s);
+	}
 }

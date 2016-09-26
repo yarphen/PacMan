@@ -33,6 +33,8 @@ body {
 	text-align: center;
 }
 </style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -42,9 +44,21 @@ body {
 				<h3>LET'S PLAY</h3>
 			</div>
 			<div class="game">
-			
+				<button id="test">TEST BUTTON</button>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$('#test').click(function() {
+			$.ajax({
+				url : 'game',
+				method : 'PUT',
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+				}
+			});
+		});
+	</script>
 </body>
 </html>
