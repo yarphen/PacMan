@@ -1,4 +1,4 @@
-package com.fishteam.pacman;
+package com.fishteam.pacman.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

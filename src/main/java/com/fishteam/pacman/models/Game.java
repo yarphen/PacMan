@@ -1,7 +1,7 @@
 package com.fishteam.pacman.models;
 
 import com.fishteam.pacman.interfaces.Problem;
-import com.fishteam.pacman.interfaces.State;
+import com.fishteam.pacman.interfaces.ProblemState;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ public class Game implements Problem{
     public Game(){
         labyrinth = new Labyrinth();
         ghost = new Ghost();
+        pacman = new PacMan();
+        cherry = new Cherry();
     }
 
 
@@ -52,23 +54,23 @@ public class Game implements Problem{
             throw new BlockException("you can't move there");
     }
 
-    public State getState() {
+    public ProblemState getState() {
         return pacman;
     }
 
-    public State getStartState() {
+    public ProblemState getStartState() {
         return null;
     }
 
-    public State getGoalState() {
+    public ProblemState getGoalState() {
         return null;
     }
 
-    public List<State> getChildren(State father) {
+    public List<ProblemState> getChildren(ProblemState father) {
         return null;
     }
 
-    public double getPathWeight(List<State> path) {
+    public double getPathWeight(List<ProblemState> path) {
         return 0;
     }
 
@@ -93,7 +95,7 @@ public class Game implements Problem{
     }
 
 
-	public List<State> getFathers(State child) {
+	public List<ProblemState> getFathers(ProblemState child) {
 		/*
 		 * 'cause steps are bidirectional
 		 */

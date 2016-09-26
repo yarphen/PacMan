@@ -1,12 +1,14 @@
 package com.fishteam.pacman.models;
 
-import com.fishteam.pacman.interfaces.State;
+import java.util.Random;
 
-public class Point implements State{
+import com.fishteam.pacman.interfaces.ProblemState;
+
+public class Point implements ProblemState{
 
     protected int x;
     protected int y;
-
+    private long id = new Random().nextLong();
     public Point(){
 
     }
@@ -43,4 +45,27 @@ public class Point implements State{
                 ", y=" + y +
                 '}';
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 293;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Point other = (Point) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+    
 }
