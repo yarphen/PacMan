@@ -17,7 +17,10 @@ public class Game implements Problem{
 	private GameInfo info = new GameInfo();
 	private List<Point> way = new LinkedList<Point>();
 	private PacManThread thread;
-	public Game(){}
+	public Game(){
+		cherry.setLocation(new Point(4, 25));
+		ghost.setLocation(new Point(0, 25));
+	}
 	public void moveGhostTop() throws BlockException {
 		Point newPoint = labyrinth.topPoint(ghostLocation());
 		if(newPoint != null){
@@ -193,10 +196,5 @@ class PacManThread extends Thread{
 		} catch (InterruptedException e) {
 			System.err.println("Game has been interrupted!");
 		}
-	}
-}
-class BlockException extends Exception {
-	public BlockException(String s) {
-		super(s);
 	}
 }

@@ -14,6 +14,7 @@ import com.fishteam.pacman.interfaces.ProblemSolver;
 import com.fishteam.pacman.json.ActionResult;
 import com.fishteam.pacman.json.GameInfo;
 import com.fishteam.pacman.json.MoveAction;
+import com.fishteam.pacman.models.BlockException;
 import com.fishteam.pacman.models.Game;
 import com.fishteam.pacman.models.PacMan;
 import com.fishteam.pacman.models.Point;
@@ -26,11 +27,28 @@ public class ActionController {
 	private GameMap queueMap;
 	@Autowired
 	private ProblemSolver solver;
-	
-	
+
+
 	@RequestMapping(value="/moveaction",method = RequestMethod.POST)
 	public @ResponseBody ActionResult moveAction(@RequestBody MoveAction moveAction){
-		return null;
+		Game game = queueMap.get(moveAction.getId());
+		ActionResult result = new ActionResult();
+		result.setSuccess(true);
+		try{
+			switch(moveAction.getDirection()){
+			case MoveAction.UP:game.moveGhostTop();break;
+			case MoveAction.RIGHT:game.moveGhostRight();break;
+			case MoveAction.DOWN:game.moveGhostBot();break;
+			case MoveAction.LEFT:game.moveGhostLeft();break;
+			default:
+				result.setSuccess(false);
+				result.setMessage("Unknown command!");
+			}
+		}catch(BlockException e){
+			result.setSuccess(false);
+			result.setMessage("WAY IS BLOCKED!!!");
+		}
+		return result;
 	}
 	@RequestMapping(value="/game",method = RequestMethod.POST)
 	public @ResponseBody Game newGame(){

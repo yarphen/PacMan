@@ -52,7 +52,7 @@ body {
 		$('#test').click(function() {
 			$.ajax({
 				url : 'game',
-				method : 'PUT',
+				method : 'POST',
 				dataType : 'json',
 				success : function(data) {
 					console.log(data);

@@ -3,7 +3,7 @@ package com.fishteam.pacman.json;
  * Action of moving in some direction
  */
 public class MoveAction {
-	private static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+	public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
 	private int direction;
 	private long id;
 	public MoveAction() {}

@@ -48,9 +48,10 @@ public class Point implements ProblemState{
 
 	@Override
 	public int hashCode() {
-		final int prime = 293;
+		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + x;
+		result = prime * result + y;
 		return result;
 	}
 
@@ -63,9 +64,11 @@ public class Point implements ProblemState{
 		if (getClass() != obj.getClass())
 			return false;
 		Point other = (Point) obj;
-		if (id != other.id)
+		if (x != other.x)
+			return false;
+		if (y != other.y)
 			return false;
 		return true;
 	}
-    
+
 }
