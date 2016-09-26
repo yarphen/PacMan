@@ -1,9 +1,11 @@
 package com.fishteam.pacman.models;
 
-public class Point {
+import com.fishteam.pacman.interfaces.State;
 
-    private int x;
-    private int y;
+public class Point implements State{
+
+    protected int x;
+    protected int y;
 
     public Point(){
 
@@ -29,7 +31,11 @@ public class Point {
     public void setX(int x) {
         this.x = x;
     }
-
+    
+    public void setLocation(Point newPoint) {
+    	setX(newPoint.x);
+    	setY(newPoint.y);
+	}
     @Override
     public String toString() {
         return "Point{" +

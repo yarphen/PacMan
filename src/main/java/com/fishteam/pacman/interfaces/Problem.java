@@ -7,5 +7,6 @@ public interface Problem {
 	State getStartState();
 	State getGoalState();
 	List<State> getChildren(State father);
+	List<State> getFathers(State child);
 	double getPathWeight(List<State> path);
 }

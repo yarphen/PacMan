@@ -8,7 +8,8 @@ import java.util.List;
 public class Game implements Problem{
     private Labyrinth labyrinth;
     private Ghost ghost;
-
+    private PacMan pacman;
+    private Cherry cherry;
     public Game(){
         labyrinth = new Labyrinth();
         ghost = new Ghost();
@@ -52,7 +53,7 @@ public class Game implements Problem{
     }
 
     public State getState() {
-        return null;
+        return pacman;
     }
 
     public State getStartState() {
@@ -91,8 +92,15 @@ public class Game implements Problem{
         return new Point(ghost.getX(),getGhost().getY());
     }
 
-    public class BlockException extends Exception {
-        public BlockException(String s) {
-        }
+
+	public List<State> getFathers(State child) {
+		/*
+		 * 'cause steps are bidirectional
+		 */
+		return getChildren(child);
+	}
+}
+class BlockException extends Exception {
+    public BlockException(String s) {
     }
 }

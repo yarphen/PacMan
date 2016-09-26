@@ -59,6 +59,10 @@ public class Labyrinth {
     public int[][] getCells(){
         return cells;
     }
+    /** Probably you won't need this */
+    public void setCells(int[][] cells){
+        this.cells = cells;
+    }
 
     /** Get the state of needed cell */
     public int getCellState(int x, int y){

@@ -1,5 +1,10 @@
-package com.fishteam.pacman;
-
+package com.fishteam.pacman.json;
+/**
+ * ActionResult contains result
+ * of a MoveAction;
+ * message that is shown
+ * if you're blocked
+ */
 public class ActionResult {
 	private boolean success;
 	private String message;
