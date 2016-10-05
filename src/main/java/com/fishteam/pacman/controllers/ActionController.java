@@ -25,7 +25,7 @@ public class ActionController {
 	@Autowired
 	private ProblemSolver solver;
 
-
+/*
 	@RequestMapping(value="/moveaction",method = RequestMethod.POST)
 	public @ResponseBody ActionResult moveAction(@RequestBody MoveAction moveAction){
 		Game game = queueMap.get(moveAction.getId());
@@ -47,20 +47,22 @@ public class ActionController {
 		}
 		return result;
 	}
+	*/
 	@RequestMapping(value="/game",method = RequestMethod.POST)
 	public @ResponseBody Game newGame(){
 		Game game = new Game();
 		queueMap.add(game);
 		game.init(solver.solve(game));
-		game.start();
 		return game;
 	}
 	@RequestMapping(value="/game",method = RequestMethod.DELETE)
 	public void deleteGame(GameInfo game){
-		queueMap.remove(game.getId()).stop();
+		queueMap.remove(game.getId());
 	}
 	@RequestMapping(value="/pacman",method = RequestMethod.POST)
 	public @ResponseBody PacMan getPacMan(GameInfo game){
-		return queueMap.get(game.getId()).getPacman();
+		Game storedGame = queueMap.get(game.getId());
+		storedGame.step();
+		return storedGame.getPacman();
 	}
 }
