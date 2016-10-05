@@ -10,7 +10,7 @@ import com.fishteam.pacman.models.Game;
 
 public interface GameMap {
 	public boolean add(Game g);
-	public Game remove(long l) throws NoSuchElementException;
+	public Game remove(String id) throws NoSuchElementException;
 	public void refresh(Game g);
-	public Game get(long l);
+	public Game get(String id);
 }

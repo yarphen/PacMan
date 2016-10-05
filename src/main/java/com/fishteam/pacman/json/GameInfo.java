@@ -7,14 +7,14 @@ import java.util.Random;
  * enough info to identify session
  */
 public class GameInfo {
-	private long id = new Random().nextLong();
+	private String id = new Random().nextLong()+"";
 	private int width;
 	private int height;
 	public GameInfo() {}
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getWidth() {
@@ -31,11 +31,9 @@ public class GameInfo {
 	}
 	@Override
 	public int hashCode() {
-		final int prime = 97;
+		final int prime = 31;
 		int result = 1;
-		result = prime * result + height;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + width;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	@Override
@@ -47,11 +45,10 @@ public class GameInfo {
 		if (getClass() != obj.getClass())
 			return false;
 		GameInfo other = (GameInfo) obj;
-		if (height != other.height)
-			return false;
-		if (id != other.id)
-			return false;
-		if (width != other.width)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
