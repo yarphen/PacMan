@@ -15,11 +15,11 @@ public class Game implements Problem{
 	private PacMan pacman = new PacMan();
 	private Cherry cherry = new Cherry();
 	private GameInfo info = new GameInfo();
-	private List<Point> way = new LinkedList<Point>();
-	private PacManThread thread;
+	private Iterator<Point> way;
 	public Game(){
-		cherry.setLocation(new Point(4, 25));
-		ghost.setLocation(new Point(0, 25));
+		pacman.setLocation(new Point(1, 1));
+		cherry.setLocation(new Point(23, 23));
+		//ghost.setLocation(new Point(0, 25));
 		info.setHeight(labyrinth.getCells().length);
 		info.setWidth(labyrinth.getCells()[0].length);
 	}
@@ -161,22 +161,27 @@ public class Game implements Problem{
 			return false;
 		return true;
 	}
+	
 	public void init(List<ProblemState> way){
+		LinkedList<Point> listOfPoints = new LinkedList<Point>();
 		way.forEach(new Consumer<ProblemState>() {
 			@Override
 			public void accept(ProblemState p) {
-				Game.this.way.add((Point)p);
+				listOfPoints.addFirst((Point)p);
 			}
 		});
-		thread = new PacManThread(this.way, this);
+		this.way = listOfPoints.iterator();
 	}
-	public void start(){
-		thread.start();
-	}
-	public void stop(){
-		thread.interrupt();
+	public boolean step(){
+		if (way.hasNext()){
+			pacman.setLocation(way.next());
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
+/*
 class PacManThread extends Thread{
 	private static final long DELAY = 500;
 	private List<Point> way;
@@ -200,3 +205,4 @@ class PacManThread extends Thread{
 		}
 	}
 }
+*/
