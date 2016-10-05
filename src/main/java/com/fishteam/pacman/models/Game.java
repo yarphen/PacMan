@@ -20,6 +20,8 @@ public class Game implements Problem{
 	public Game(){
 		cherry.setLocation(new Point(4, 25));
 		ghost.setLocation(new Point(0, 25));
+		info.setHeight(labyrinth.getCells().length);
+		info.setWidth(labyrinth.getCells()[0].length);
 	}
 	public void moveGhostTop() throws BlockException {
 		Point newPoint = labyrinth.topPoint(ghostLocation());
