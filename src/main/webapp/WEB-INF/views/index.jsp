@@ -23,18 +23,24 @@ body {
 }
 
 .game {
-	height: 800px;
 	background-color: blue;
 	border-radius: 20px;
+	padding: 10px;
 }
 
 .title {
 	color: yellow;
 	text-align: center;
 }
+
+#start {
+	
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -42,23 +48,50 @@ body {
 			<div class="title">
 				<h2>PACMAN'S GAME!</h2>
 				<h3>LET'S PLAY</h3>
+				<div id="start">START GAME</div>
 			</div>
-			<div class="game">
-				<button id="test">TEST BUTTON</button>
-			</div>
+			<div class="game"></div>
 		</div>
 	</div>
 	<script type="text/javascript">
-		$('#test').click(function() {
-			$.ajax({
-				url : 'game',
-				method : 'POST',
-				dataType : 'json',
-				success : function(data) {
-					console.log(data);
-				}
+		(function() {
+			var start = $('#start');
+			var game = $('.game');
+			var renderer = new PIXI.CanvasRenderer(game.width(), game.width());
+			game.append(renderer.view);
+			var stage = new PIXI.Stage;
+			start.click(function() {
+				$.ajax({
+					url : 'game',
+					method : 'POST',
+					dataType : 'json',
+					success : function(data) {
+						console.log(data);
+						var w_size = game.width()/data.info.width;
+						var h_size = game.height()/data.info.height;
+						for (var i = 0; i < data.info.width; i++) {
+							for (var j = 0; j < data.info.height; j++) {
+								if (data.labyrinth.cells[j][i] == 1) {
+									var wall = PIXI.Sprite
+											.fromImage('resources/wall.png');
+									wall.x = w_size * i;
+									wall.y = h_size * j;
+									wall.width = w_size;
+									wall.height = h_size;
+									stage.addChild(wall);
+								}
+							}
+						}
+						start.hide();
+					}
+				});
 			});
-		});
+			function draw() {
+				renderer.render(stage);
+				requestAnimationFrame(draw);
+			}
+			draw();
+		})();
 	</script>
 </body>
 </html>

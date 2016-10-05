@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.fishteam.pacman.GameQueueMap;
 import com.fishteam.pacman.interfaces.GameMap;
 import com.fishteam.pacman.interfaces.ProblemSolver;
 import com.fishteam.pacman.json.ActionResult;
@@ -17,7 +15,6 @@ import com.fishteam.pacman.json.MoveAction;
 import com.fishteam.pacman.models.BlockException;
 import com.fishteam.pacman.models.Game;
 import com.fishteam.pacman.models.PacMan;
-import com.fishteam.pacman.models.Point;
 /**
  * This is controller to interact with js on page
  */
