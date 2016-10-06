@@ -71,101 +71,21 @@ $(document).ready(function() {
 		resultObj.h=h_size;
 		return resultObj;
 	};
+	var block = $('.start-container');
 	bfs.click(function(){
-		game.hide();
-		start.fadeOut(2000, function() {
-			$.ajax({
-				url : 'game_bfs',
-				method : 'POST',
-				dataType : 'json',
-				success : function(data) {
-					var gameInfo = renderLabyrinth(data);
-					game.fadeIn(4000, function(){
-						var plainMove = function(sprite, from, to, duration, success, steps, step){
-							if (step === undefined){
-								step = 0;
-							}
-							if (step>steps){
-								success();
-							}else{
-								var coef1 = (step+0.0)/steps;
-								var coef2 = 1 - coef1;
-								sprite.x = coef2*from.x + coef1*to.x;
-								sprite.y = coef2*from.y + coef1*to.y;
-								setTimeout(function(){
-									plainMove(sprite, from, to, duration, success, steps, step+1);
-								}, duration/steps);
-							}
-						};
-						var scaleOut = function(sprite, delay, q, steps){
-							sprite.width*=q;
-							sprite.height*=q;
-							if (steps>0){
-								setTimeout(function(){
-									scaleOut(sprite, delay, q, steps-1);
-								}, delay);
-							}
-						};
-						var step = function(){
-							$.ajax({
-								url : 'pacman',
-								method : 'POST',
-								data:{
-									id: gameInfo.id
-								},
-								dataType : 'json',
-								success : function(pacman) {
-									if (gameInfo.pacmanPoint.x==gameInfo.cherryPoint.x
-											&&
-											gameInfo.pacmanPoint.y==gameInfo.cherryPoint.y){
-										scaleOut(
-												gameInfo.cherrySprite,
-												10,
-												0.9,
-												100
-										);
-										start.text('TRY AGAIN?')
-										start.fadeIn(2000);
-									}else{
-										var currentPacman = {
-												x:gameInfo.pacmanPoint.x*gameInfo.w+gameInfo.w*0.5,
-												y:gameInfo.pacmanPoint.y*gameInfo.h+gameInfo.h*0.5
-										};
-										var futurePacman = {
-												x:pacman.x*gameInfo.w+gameInfo.w*0.5,
-												y:pacman.y*gameInfo.h+gameInfo.h*0.5
-										};
-										gameInfo.pacmanSprite.rotation = 
-										Math.atan2(
-												futurePacman.y-currentPacman.y,
-												futurePacman.x-currentPacman.x
-												);
-										plainMove(
-												gameInfo.pacmanSprite,
-												currentPacman, 
-												futurePacman,
-												50,
-												step,
-												5
-										);
-										gameInfo.pacmanPoint = pacman;
-									}
-								}
-							});
-						};
-						step();
-					});
-				}
-			});
-		});
+		startGame('game_bfs',block);
 	});
-	dfs.click(startGame('game_dfs'));
-	a_star.click(startGame('game_dfs'));
+	dfs.click(function(){
+		startGame('game_dfs', block);
+	});
+	a_star.click(function(){
+		startGame('game_a_star', block);
+	});
 	
 
-	function startGame(solver){
+	function startGame(solver, block){
 		game.hide();
-		start.fadeOut(2000, function() {
+		block.fadeOut(2000, function() {
 			$.ajax({
 				url : solver,
 				method : 'POST',
@@ -216,8 +136,7 @@ $(document).ready(function() {
 												0.9,
 												100
 										);
-										start.text('TRY AGAIN?')
-										start.fadeIn(2000);
+										block.fadeIn(2000);
 									}else{
 										var currentPacman = {
 												x:gameInfo.pacmanPoint.x*gameInfo.w+gameInfo.w*0.5,
