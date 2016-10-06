@@ -23,7 +23,9 @@ public class ActionController {
 	@Autowired
 	private GameMap queueMap;
 	@Autowired
-	private ProblemSolver solver;
+	private ProblemSolver bfs_solver;
+	@Autowired
+	private ProblemSolver dfs_solver;
 
 /*
 	@RequestMapping(value="/moveaction",method = RequestMethod.POST)
@@ -48,11 +50,18 @@ public class ActionController {
 		return result;
 	}
 	*/
-	@RequestMapping(value="/game",method = RequestMethod.POST)
-	public @ResponseBody Game newGame(){
+	@RequestMapping(value="/game_bfs",method = RequestMethod.POST)
+	public @ResponseBody Game newGameBFS(){
 		Game game = new Game();
 		queueMap.add(game);
-		game.init(solver.solve(game));
+		game.init(bfs_solver.solve(game));
+		return game;
+	}
+	@RequestMapping(value="/game_dfs",method = RequestMethod.POST)
+	public @ResponseBody Game newGameDFS(){
+		Game game = new Game();
+		queueMap.add(game);
+		game.init(dfs_solver.solve(game));
 		return game;
 	}
 	@RequestMapping(value="/game",method = RequestMethod.DELETE)

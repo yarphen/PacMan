@@ -26,7 +26,10 @@
 				</div>
 				<div class="layer">
 				<div class="start-container">
-					<div id="start">START GAME!</div>
+					<div class="start" id="bfs">BFS</div>
+					<div class="start" id="dfs">DFS</div>
+					<div class="start" id="a_star">A*</div>
+					<div class="start" id="greedy">Greedy algorithm</div>
 				</div>
 				</div>
 			</div>
