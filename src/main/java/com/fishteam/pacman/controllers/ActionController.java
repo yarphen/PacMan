@@ -2,17 +2,13 @@ package com.fishteam.pacman.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fishteam.pacman.interfaces.GameMap;
 import com.fishteam.pacman.interfaces.ProblemSolver;
-import com.fishteam.pacman.json.ActionResult;
 import com.fishteam.pacman.json.GameInfo;
-import com.fishteam.pacman.json.MoveAction;
-import com.fishteam.pacman.models.BlockException;
 import com.fishteam.pacman.models.Game;
 import com.fishteam.pacman.models.PacMan;
 /**
@@ -26,6 +22,10 @@ public class ActionController {
 	private ProblemSolver bfs_solver;
 	@Autowired
 	private ProblemSolver dfs_solver;
+	@Autowired
+	private ProblemSolver astar_solver;
+	@Autowired
+	private ProblemSolver greedy_solver;
 
 /*
 	@RequestMapping(value="/moveaction",method = RequestMethod.POST)
@@ -62,6 +62,20 @@ public class ActionController {
 		Game game = new Game();
 		queueMap.add(game);
 		game.init(dfs_solver.solve(game));
+		return game;
+	}
+	@RequestMapping(value="/game_astar",method = RequestMethod.POST)
+	public @ResponseBody Game newGameAStar(){
+		Game game = new Game();
+		queueMap.add(game);
+		game.init(astar_solver.solve(game));
+		return game;
+	}
+	@RequestMapping(value="/game_greedy",method = RequestMethod.POST)
+	public @ResponseBody Game newGameGreedy(){
+		Game game = new Game();
+		queueMap.add(game);
+		game.init(greedy_solver.solve(game));
 		return game;
 	}
 	@RequestMapping(value="/game",method = RequestMethod.DELETE)
