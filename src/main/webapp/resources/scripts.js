@@ -28,11 +28,11 @@ $(document).ready(function() {
 			return object;
 		};
 		console.log(data);
-		var w_size = game.width()/data.info.width;
-		var h_size = game.height()/data.info.height;
+		var w_size = game.width()/(data.info.width);
+		var h_size = game.height()/(data.info.height);
 		for (var i = 0; i < data.info.width; i++) {
 			for (var j = 0; j < data.info.height; j++) {
-				if (data.labyrinth.cells[j][i] == 1) {
+				if (data.labyrinth.cells[j][i] == 1 ) {
 					var wall = createSprite(
 							'resources/wall.jpg', 
 							w_size * i, 
