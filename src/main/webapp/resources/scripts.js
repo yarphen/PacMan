@@ -79,7 +79,10 @@ $(document).ready(function() {
 		startGame('game_dfs', block);
 	});
 	a_star.click(function(){
-		startGame('game_a_star', block);
+		startGame('game_astar', block);
+	});
+	greedy.click(function(){
+		startGame('game_greedy', block);
 	});
 	
 
