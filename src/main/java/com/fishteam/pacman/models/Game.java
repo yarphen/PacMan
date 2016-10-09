@@ -163,7 +163,7 @@ public class Game implements Problem{
 	}
 	
 	public void init(List<ProblemState> way){
-		LinkedList<Point> listOfPoints = new LinkedList<Point>();
+		final LinkedList<Point> listOfPoints = new LinkedList<Point>();
 		way.forEach(new Consumer<ProblemState>() {
 			@Override
 			public void accept(ProblemState p) {
