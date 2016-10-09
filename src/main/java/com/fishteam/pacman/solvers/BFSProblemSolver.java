@@ -89,7 +89,7 @@ public class BFSProblemSolver implements ProblemSolver{
 						return newNode;
 					}else{
 						visited.add(state);
-						System.out.println(state);
+//						System.out.println(state);
 						children.add(newNode);
 					}
 				}
