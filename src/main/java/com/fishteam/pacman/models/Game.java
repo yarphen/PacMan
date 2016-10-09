@@ -180,6 +180,11 @@ public class Game implements Problem{
 			return false;
 		}
 	}
+	@Override
+	public int getWeight(ProblemState selected) {
+		Point point = (Point) selected;
+		return Math.abs(cherry.x-point.x)+Math.abs(cherry.y-point.y);
+	}
 }
 /*
 class PacManThread extends Thread{
