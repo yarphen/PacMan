@@ -46,7 +46,9 @@
 	<beans:bean name="gamequeue" class="com.fishteam.pacman.GameQueueMap">
 		<beans:constructor-arg value="10" />
 	</beans:bean>
-	<beans:bean name="dfs_solver" class="com.fishteam.pacman.solvers.DFSProblemSolver" />
-	<beans:bean name="bfs_solver" class="com.fishteam.pacman.solvers.BFSProblemSolver" />
+	<beans:bean name="dfs_solver" class="com.fishteam.pacman.solvers.DFSProblemSolverV2" />
+	<beans:bean name="bfs_solver" class="com.fishteam.pacman.solvers.BFSProblemSolverV2" />
+	<beans:bean name="astar_solver" class="com.fishteam.pacman.solvers.AStarProblemSolver" />
+	<beans:bean name="greedy_solver" class="com.fishteam.pacman.solvers.GreedyProblemSolver" />
 
 </beans:beans>
